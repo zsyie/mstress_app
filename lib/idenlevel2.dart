@@ -159,7 +159,7 @@ class RadioGroupState extends State<RadioGroup> {
   void updateQuestion() {
     setState(() {
       if (questionNumber == quiz.questions.length - 1) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Result()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Result(result: finalScore,)));
 
       }
       else{
@@ -183,62 +183,72 @@ class RadioGroupState extends State<RadioGroup> {
 
 
 class Result extends StatefulWidget {
-  final String result;
+  final int result;
   Result({this.result});
 
   @override
   State<StatefulWidget> createState() {
-    return new ResultState(score: finalScore);
+    return new ResultState();
   }
 }
 
 class ResultState extends State<Result> {
 
   int score = 0;
-  ResultState({Key key, @required this.score});
+  String resultFinal = '';
 
   void finalScore(){
     setState(() {
-      if (score < 14) {
-        print("Low stress level");
-      }else if (score < 27) {
-        print("Moderate stress");
-      }else if (score > 26) {
-        print("High perceived stress");
+      if (widget.result < 14) {
+        resultFinal = "Low stress level";
+      }else if (widget.result < 27) {
+        resultFinal = "Moderate stress";
+      }else  {
+        resultFinal = "High perceived stress";
       }
+    });
     }
-    );}
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    finalScore();
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async => false,
       child: Scaffold(
-        body: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget> [
-              Text("Result: $score",
-                  style: TextStyle(
-                    fontSize: 18.0,
+        body: Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Text("Result: ${widget.result}",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.red,
+                    )),
+                SizedBox(height: 10),
+                Text("You are: $resultFinal"),
+                Padding(padding: EdgeInsets.all(10.0)),
+                MaterialButton(
                     color: Colors.red,
-                  )),
-              SizedBox(height: 10),
-              Text("You are: $finalScore"),
-              Padding(padding: EdgeInsets.all(10.0)),
-              MaterialButton(
-                  color: Colors.red,
-                  onPressed: () {
-                    questionNumber = 0;
-                    score = 0;
-                    Navigator.pop(context);
-                  },
-                  child: Text("Reset Test",
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ))
-              )
-            ],
+                    onPressed: () {
+                      questionNumber = 0;
+                      score = 0;
+                      Navigator.pop(context);
+                    },
+                    child: Text("Reset Test",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.white,
+                        ))
+                )
+              ],
+            ),
           ),
         ),
       ),
