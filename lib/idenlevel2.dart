@@ -19,19 +19,27 @@ class Idenlevel {
     "In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
   ];
 
+  var choices = [
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+    ["Never", "Almost never", "Sometimes", "Fairly often", "Very often"],
+  ];
+
+
 }
   String result;
-  int counter = 2;
   var finalScore = 0;
   var questionNumber = 0;
   var quiz = Idenlevel();
 
 
-class MyChoice{
-  String choice;
-  int index;
-  MyChoice({this.index,this.choice});
-}
 class RadioGroup extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -39,20 +47,20 @@ class RadioGroup extends StatefulWidget {
   }
 }
 class RadioGroupState extends State<RadioGroup> {
-  // ignore: non_constant_identifier_names
-  String default_choice = "Never";
-  // ignore: non_constant_identifier_names
-  int default_index = 0;
 
+  int selectedRadioTile;
+  @override
+  void initState() {
+    super.initState();
+    selectedRadioTile = 0;
+  }
 
+  setSelectedRadioTile(int val) {
+    setState(() {
+      selectedRadioTile = val;
+    });
+  }
 
-  List<MyChoice> choices = [
-    MyChoice(index:0, choice:"Never"),
-    MyChoice(index:1, choice:"Almost never"),
-    MyChoice(index:2, choice:"Sometimes"),
-    MyChoice(index:3, choice:"Fairly often"),
-    MyChoice(index:4, choice:"Very often"),
-  ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -90,7 +98,7 @@ class RadioGroupState extends State<RadioGroup> {
                 ),
               ),
               Padding(padding: EdgeInsets.all(10.0)),
-              Text((quiz.questions[questionNumber]),
+              Text(quiz.questions[questionNumber],
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.black,
@@ -98,39 +106,70 @@ class RadioGroupState extends State<RadioGroup> {
               Padding(padding: EdgeInsets.all(10.0)),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget> [
-
                   //button1
-               Column(
-                children: <Widget> [
-                Wrap(
-                  children: <Widget> [
-                  Container(
-                    child: Column(
-                    children: choices.map((data) => RadioListTile(
-
-                    title: Text('${data.choice}'),
-                    groupValue: default_index,
-                    value: data.index,
+                  RadioListTile(
+                    value: 1,
+                    groupValue: selectedRadioTile,
+                    title: Text("Never"),
                     activeColor: Colors.yellow,
-                    onChanged: (value) {
-                    setState(() {
-                     default_choice = data.choice;
-                     default_index = data.index;
-                     finalScore++;
+                    onChanged: (val) {
 
-                    });
-
-                    updateQuestion();
+                      updateQuestion();
                     },
-                  )).toList(),
                   ),
-                 ),
-                 ]
-                ),
-                ]
-                ),
+
+                  //button2
+                  RadioListTile(
+                    value: 2,
+                    groupValue: selectedRadioTile,
+                    title: Text("Almost never"),
+                    activeColor: Colors.yellow,
+                    onChanged: (val) {
+                      selectedRadioTile = val;
+                      finalScore++;
+                      updateQuestion();
+                    },
+                  ),
+
+                  //button3
+                  RadioListTile(
+                    value: 3,
+                    groupValue: selectedRadioTile,
+                    title: Text("Sometimes"),
+                    activeColor: Colors.yellow,
+                    onChanged: (val) {
+                      selectedRadioTile = val;
+                      finalScore++;
+                      updateQuestion();
+                    },
+                  ),
+
+                  //button4
+                  RadioListTile(
+                    value: 4,
+                    groupValue: selectedRadioTile,
+                    title: Text("Fairly often"),
+                    activeColor: Colors.yellow,
+                    onChanged: (val) {
+                      selectedRadioTile = val;
+                      finalScore++;
+                      updateQuestion();
+                    },
+                  ),
+
+                  //button5
+                  RadioListTile(
+                    value: 5,
+                    groupValue: selectedRadioTile,
+                    title: Text("Very often"),
+                    activeColor: Colors.yellow,
+                    onChanged: (val) {
+                      selectedRadioTile = val;
+                      finalScore++;
+                      updateQuestion();
+                    },
+                  ),
                 ],
               ),
               Padding (padding: EdgeInsets.all(10.0)),
@@ -200,18 +239,17 @@ class ResultState extends State<Result> {
   void finalScore(){
     setState(() {
       if (widget.result < 14) {
-        resultFinal = "Low stress level";
+        resultFinal = "Low Stress";
       }else if (widget.result < 27) {
-        resultFinal = "Moderate stress";
+        resultFinal = "Moderate Stress";
       }else  {
-        resultFinal = "High perceived stress";
+        resultFinal = "High Perceived Stress";
       }
     });
     }
 
     @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     finalScore();
   }
@@ -221,18 +259,24 @@ class ResultState extends State<Result> {
     return WillPopScope(
       onWillPop: ()async => false,
       child: Scaffold(
+        backgroundColor: Colors.deepPurpleAccent,
         body: Center(
           child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
-                Text("Result: ${widget.result}",
+                Text("RESULT: ${widget.result}",
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
                       color: Colors.red,
                     )),
-                SizedBox(height: 10),
-                Text("You are: $resultFinal"),
+                Padding(padding: EdgeInsets.all(10.0)),
+                Text("Your Stress Level : $resultFinal",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Colors.white,
+                    )),
                 Padding(padding: EdgeInsets.all(10.0)),
                 MaterialButton(
                     color: Colors.red,
