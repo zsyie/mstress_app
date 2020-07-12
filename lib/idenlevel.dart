@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mstressapp/idenlevel2.dart';
+import './main.dart';
 
 void main() => runApp ( new MaterialApp(
   debugShowCheckedModeBanner: false,
@@ -17,6 +18,27 @@ class IdenlevelState extends State<Idenlevel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar:
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        height: 60,
+        color: Colors.deepPurpleAccent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget> [
+            FlatButton(
+              child: Icon(Icons.home,
+                  size: 45.0),
+              onPressed: () {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) {
+                    return HomeScreen();
+                  },),
+                );},
+            ),
+          ],
+        ),
+      ),
       backgroundColor: Colors.deepPurpleAccent,
       appBar: AppBar(
         title: Text('STRESS LEVEL'),
@@ -29,7 +51,7 @@ class IdenlevelState extends State<Idenlevel> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget> [
-            Text('PERCEIVED STRESS SCALE',
+            Text('PERCEIVED STRESS SCALE (PSS)',
             style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Open Sans',
@@ -54,7 +76,7 @@ class IdenlevelState extends State<Idenlevel> {
                 child: Text("Let's Try This!",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 14.0,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.bold,
                     fontStyle: FontStyle.italic,
                     letterSpacing: 2.0,
@@ -65,7 +87,7 @@ class IdenlevelState extends State<Idenlevel> {
                 onPressed: () {
                   Navigator.push(context,
                     MaterialPageRoute(builder: (context) {
-                      return Idenlevel2();
+                      return RadioGroup();
                     },),
                   );},
               ),
@@ -78,6 +100,6 @@ class IdenlevelState extends State<Idenlevel> {
   void startQuiz() {
     setState(() {
       Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => Idenlevel2()));
+          context, new MaterialPageRoute(builder: (context) => RadioGroup()));
     });}
 }
