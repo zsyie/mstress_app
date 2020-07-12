@@ -1,176 +1,136 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp (MaterialApp(
   debugShowCheckedModeBanner: false,
-  home: Idenlevel2(),
+  home: RadioGroup(),
 ));
 
 class Idenlevel {
   var questions = [
-    "Been upset because of something that happened unexpectedly?",
-    "That you were unable to control the important things in your life?",
-    "Nervous and stressed?",
-    "Not confident about your ability to handle your personal problems?",
-    "That things were not going your way?",
-    "Found that you could not cope with all the things that you had to do?",
-    "Not been able to control irritations in your life?",
-    "That you were on the buttom of things?",
-    "Been angered because of things that happened that were outside of your control?",
-    "Difficulties were piling up so high that you could not overcome them?",
+    "In the last month, how often have you been upset because of something that happened unexpectedly?",
+    "In the last month, how often have you felt that you were unable to control the important things in your life?",
+    "In the last month, how often have you felt nervous and stressed?",
+    "In the last month, how often have you felt not confident about your ability to handle your personal problems?",
+    "In the last month, how often have you felt that things were not going your way?",
+    "In the last month, how often have you found that you could not cope with all the things that you had to do?",
+    "In the last month, how often have you felt not been able to control irritations in your life?",
+    "In the last month, how often have you felt that you were on the buttom of things?",
+    "In the last month, how often have you been angered because of things that happened that were outside of your control?",
+    "In the last month, how often have you felt difficulties were piling up so high that you could not overcome them?",
   ];
-  var choices = [
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-    ["0 - never", "1 - almost never", "2 - sometimes", "3 - fairly often", "4 - very often"],
-  ];
-  var result = null;
-    if (result >= 27 && <= 40) {
-      print("You are considered in high perceived stress.");
-  } else if (result >= 14 && <= 26) {
-      print("You are considered in moderate stress.");
-  } else if (result < 14) {
-      print("You are considered in low stress.");
-  }
 
 }
+  String result;
+  int counter = 2;
   var finalScore = 0;
-  var questionNumber = 1;
+  var questionNumber = 0;
   var quiz = Idenlevel();
 
-class Idenlevel2 extends StatefulWidget {
+
+class MyChoice{
+  String choice;
+  int index;
+  MyChoice({this.index,this.choice});
+}
+class RadioGroup extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new IdenlevelState2();
+    return new RadioGroupState();
   }
 }
+class RadioGroupState extends State<RadioGroup> {
+  // ignore: non_constant_identifier_names
+  String default_choice = "Never";
+  // ignore: non_constant_identifier_names
+  int default_index = 0;
 
-class IdenlevelState2 extends State<Idenlevel2> {
+
+
+  List<MyChoice> choices = [
+    MyChoice(index:0, choice:"Never"),
+    MyChoice(index:1, choice:"Almost never"),
+    MyChoice(index:2, choice:"Sometimes"),
+    MyChoice(index:3, choice:"Fairly often"),
+    MyChoice(index:4, choice:"Very often"),
+  ];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()async => false,
       child: Scaffold(
-          backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.deepPurpleAccent,
         appBar: AppBar(
-            title: Text('STRESS LEVEL'),
-            centerTitle: true,
-            backgroundColor: Colors.deepPurple,
-            elevation: 0.0,
-      ),
+          title: Text('STRESS LEVEL'),
+          centerTitle: true,
+          backgroundColor: Colors.deepPurple,
+          elevation: 0.0,
+        ),
         body: Container(
-          margin: EdgeInsets.all(40.0),
+          margin: EdgeInsets.all(10.0),
           alignment: Alignment.topLeft,
           child: Column(
             children: <Widget> [
-              Padding(padding: EdgeInsets.all(20.0)),
+              Padding(padding: EdgeInsets.all(10.0)),
               Container(
                 alignment: Alignment.centerRight,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget> [
                     Text("Question ${questionNumber + 1} of ${quiz.questions.length}",
-                    style: TextStyle(
-                      fontSize: 22.0
-                    ),),
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black,
+                      ),),
                     Text("Score: $finalScore",
-                    style: TextStyle(
-                        fontSize: 22.0
-                    )),
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black,
+                        )),
                   ],
                 ),
               ),
-              Padding(padding: EdgeInsets.all(30.0)),
-              Text(quiz.questions[questionNumber],
-              style: TextStyle(
-                fontSize: 18.0
-              )),
+              Padding(padding: EdgeInsets.all(10.0)),
+              Text((quiz.questions[questionNumber]),
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  )),
               Padding(padding: EdgeInsets.all(10.0)),
               Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget> [
 
                   //button1
-                  MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.purple,
-                    onPressed: () {
-                      updateQuestion();
-                    },
-                    child: Text(quiz.choices[questionNumber][1],
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  ),
+               Column(
+                children: <Widget> [
+                Wrap(
+                  children: <Widget> [
+                  Container(
+                    child: Column(
+                    children: choices.map((data) => RadioListTile(
 
-                  //button2
-                  MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.purple,
-                    onPressed: () {
-                      updateQuestion();
-                    },
-                    child: Text(quiz.choices[questionNumber][2],
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                    title: Text('${data.choice}'),
+                    groupValue: default_index,
+                    value: data.index,
+                    activeColor: Colors.yellow,
+                    onChanged: (value) {
+                    setState(() {
+                     default_choice = data.choice;
+                     default_index = data.index;
+                     finalScore++;
 
-                  //button3
-                  MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.purple,
-                    onPressed: () {
-                      updateQuestion();
-                    },
-                    child: Text(quiz.choices[questionNumber][3],
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                    });
 
-                  //button4
-                  MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.purple,
-                    onPressed: () {
-                      updateQuestion();
+                    updateQuestion();
                     },
-                    child: Text(quiz.choices[questionNumber][4],
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
-                    ),
+                  )).toList(),
                   ),
-
-                  //button5
-                  MaterialButton(
-                    minWidth: 120.0,
-                    color: Colors.purple,
-                    onPressed: () {
-                      updateQuestion();
-                    },
-                    child: Text(quiz.choices[questionNumber][5],
-                      style: TextStyle(
-                        fontSize: 18.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                 ),
+                 ]
+                ),
+                ]
+                ),
                 ],
               ),
               Padding (padding: EdgeInsets.all(10.0)),
@@ -182,10 +142,10 @@ class IdenlevelState2 extends State<Idenlevel2> {
                   color: Colors.red,
                   onPressed: resetQuiz,
                   child: Text("Quit",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.white,
-                  )),
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      )),
                 ),
               ),
             ],
@@ -193,30 +153,61 @@ class IdenlevelState2 extends State<Idenlevel2> {
         ),
       ),
     );
-  }
-  void resetQuiz() {
-    setState(() {
-      Navigator.pop(context);
-      finalScore = 0;
-      questionNumber = 1;
-    });
-  }
 
+
+  }
   void updateQuestion() {
     setState(() {
       if (questionNumber == quiz.questions.length - 1) {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Summary(score: finalScore)));
-      }else {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Result()));
+
+      }
+      else{
         questionNumber++;
       }
     }
     );}
+
+  void resetQuiz() {
+    setState(() {
+      Navigator.pop(context);
+      finalScore = 0;
+      questionNumber = 0;
+    });
+  }
 }
 
-class Summary extends StatelessWidget{
-  final int score;
-  Summary({Key key, @required this.score}) : super(key : key);
 
+
+
+
+
+class Result extends StatefulWidget {
+  final String result;
+  Result({this.result});
+
+  @override
+  State<StatefulWidget> createState() {
+    return new ResultState(score: finalScore);
+  }
+}
+
+class ResultState extends State<Result> {
+
+  int score = 0;
+  ResultState({Key key, @required this.score});
+
+  void finalScore(){
+    setState(() {
+      if (score < 14) {
+        print("Low stress level");
+      }else if (score < 27) {
+        print("Moderate stress");
+      }else if (score > 26) {
+        print("High perceived stress");
+      }
+    }
+    );}
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -227,24 +218,25 @@ class Summary extends StatelessWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
               Text("Result: $score",
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-              )),
-
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.red,
+                  )),
+              SizedBox(height: 10),
+              Text("You are: $finalScore"),
               Padding(padding: EdgeInsets.all(10.0)),
               MaterialButton(
-                color: Colors.red,
-                onPressed: () {
-                  questionNumber = 1;
-                  finalScore = 0;
-                  Navigator.pop(context);
-                },
-                child: Text("Reset Test",
-                style: TextStyle(
-                  fontSize: 18.0,
-                  color: Colors.white,
-                ))
+                  color: Colors.red,
+                  onPressed: () {
+                    questionNumber = 0;
+                    score = 0;
+                    Navigator.pop(context);
+                  },
+                  child: Text("Reset Test",
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                      ))
               )
             ],
           ),
